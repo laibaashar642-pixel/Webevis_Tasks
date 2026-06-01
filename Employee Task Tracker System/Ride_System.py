@@ -1,25 +1,18 @@
 import math
 
-# ============================================================
-# DATA STRUCTURES — Teen dictionaries mein sab kuch store hoga
-# ============================================================
 drivers = {}   # driver_id → driver info
 riders = {}    # rider_id  → rider info
 requests = {}  # request_id → ride ticket
 request_counter = 1
-
-# ============================================================
-# HELPER FUNCTION — Distance calculate karna
-# Logic: Euclidean distance formula → √((x2-x1)² + (y2-y1)²)
-# ============================================================
+#ye formula nai smj aya
 def calculate_distance(loc1, loc2):
     return math.sqrt((loc2[0] - loc1[0])**2 + (loc2[1] - loc1[1])**2)
 
-# ============================================================
+
 # 1. add_driver — Naya driver add karo
 # Logic: ID already exist karta hai? → error
 #        Nahi karta? → dictionary mein store karo
-# ============================================================
+
 def add_driver(driver_id, name, location):
     if driver_id in drivers:
         print(f"Error: Driver '{driver_id}' already exists!")
@@ -33,10 +26,10 @@ def add_driver(driver_id, name, location):
     }
     print(f"Driver '{name}' added successfully!")
 
-# ============================================================
+
 # 2. add_rider — Naya rider add karo
 # Logic: Same as add_driver
-# ============================================================
+
 def add_rider(rider_id, name, location):
     if rider_id in riders:
         print(f"Error: Rider '{rider_id}' already exists!")
@@ -47,11 +40,11 @@ def add_rider(rider_id, name, location):
     }
     print(f"Rider '{name}' added successfully!")
 
-# ============================================================
+
 # 3. request_ride — Rider ride maange
 # Logic: Rider exist karta hai? → ride ticket banao
 #        Status = REQUESTED, driver = None abhi
-# ============================================================
+
 def request_ride(rider_id, pickup, drop):
     global request_counter
     if rider_id not in riders:
@@ -92,11 +85,11 @@ def find_nearest_driver(pickup_location):
         print("No available drivers found!")
     return nearest_id
 
-# ============================================================
+
 # 5. match_driver — Request ke liye driver assign karo
 # Logic: Request REQUESTED state mein honi chahiye
 #        Nearest driver dhundo → assign karo → unavailable karo
-# ============================================================
+
 def match_driver(request_id):
     if request_id not in requests:
         print(f"Error: Request '{request_id}' not found!")
@@ -118,10 +111,9 @@ def match_driver(request_id):
 
     print(f"Driver '{drivers[nearest]['name']}' matched to request '{request_id}'!")
 
-# ============================================================
 # 6. start_ride — Ride shuru karo
 # Logic: Status MATCHED honi chahiye → STARTED
-# ============================================================
+
 def start_ride(request_id):
     if request_id not in requests:
         print(f"Error: Request '{request_id}' not found!")
@@ -133,12 +125,11 @@ def start_ride(request_id):
     req["status"] = "STARTED"
     print(f"Ride '{request_id}' started!")
 
-# ============================================================
 # 7. complete_ride — Ride complete karo
 # Logic: Status STARTED honi chahiye → COMPLETED
 #        Fare calculate karo — distance × 10
 #        Driver free karo, rides_completed++
-# ============================================================
+
 def complete_ride(request_id):
     if request_id not in requests:
         print(f"Error: Request '{request_id}' not found!")
@@ -160,11 +151,10 @@ def complete_ride(request_id):
 
     print(f"Ride '{request_id}' completed! Fare: {req['fare']} coins")
 
-# ============================================================
 # 8. cancel_ride — Ride cancel karo
 # Logic: REQUESTED ya MATCHED state mein cancel ho sakti hai
 #        Driver ko free karo agar assigned tha
-# ============================================================
+
 def cancel_ride(request_id):
     if request_id not in requests:
         print(f"Error: Request '{request_id}' not found!")
@@ -181,11 +171,10 @@ def cancel_ride(request_id):
     req["status"] = "CANCELLED"
     print(f"Ride '{request_id}' cancelled!")
 
-# ============================================================
+
 # 9. rate_driver — Driver ko rate karo
 # Logic: Sirf COMPLETED rides pe rating ho sakti hai
 #        Average rating calculate karo
-# ============================================================
 def rate_driver(request_id, rating):
     if request_id not in requests:
         print(f"Error: Request '{request_id}' not found!")
@@ -208,9 +197,9 @@ def rate_driver(request_id, rating):
     )
     print(f"Driver '{driver['name']}' rated {rating}/5 — New avg: {driver['rating']}")
 
-# ============================================================
+
 # TESTING — Poora flow test karo
-# ============================================================
+
 print("=" * 50)
 print("RIDE SHARING SYSTEM — TEST")
 print("=" * 50)
